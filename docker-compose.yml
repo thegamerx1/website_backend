@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+   web:
+      build: .
+      container_name: website_backend
+      restart: always
+      environment:
+         - APP_PORT=80
+         - APP_HOST=0.0.0.0
+         - ALLOWED_ORIGIN=https://example.com
+         - WEBHOOK_URL=
+      ports:
+         - "8081:80"
