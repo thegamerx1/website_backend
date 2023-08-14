@@ -11,10 +11,10 @@ chrono = "0.4.26"
 dotenv = "0.15.0"
 serde = "1.0.177"
 serde_json = "1.0.104"
-socketioxide = { version = "0.3.0", branch = "main", git = "https://github.com/Totodore/socketioxide.git" }
+# socketioxide = { version = "0.3.0", branch = "main", git = "https://github.com/Totodore/socketioxide.git" }
 tokio = { version = "1.29.1", features = ["full"] }
 tower = "0.4.13"
 tower-http = { version = "0.4.3", features = ["cors"] }
 tracing = "0.1.37"
 tracing-subscriber = "0.3.17"
-webhook = "2.1.2"
+# webhook = "2.1.2"
