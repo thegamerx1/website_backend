@@ -18,10 +18,6 @@ stdenv.mkDerivation {
     -isystem ${glibc.dev}/include
   '';
 
-  shellHook = ''
-    cargo ramdisk mount -t target
-  '';
-
   # For Rust language server and rust-analyzer
   RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
 }
