@@ -1,19 +1,20 @@
-use std::net::SocketAddr;
-use std::sync::Arc;
+// use std::sync::Arc;
+// use axum::extract::State;
+// use axum::routing::post;
+// use serde::Deserialize;
 
-use axum::extract::State;
-use axum::http::StatusCode;
-use axum::routing::post;
-use axum::{http::Method, routing::get};
-use axum::{Json, Server};
-use chrono::Utc;
-use serde::Deserialize;
-use serde_json::Value;
+// use serde_json::Value;
 // use socketioxide::{Namespace, SocketIoLayer};
-use tower_http::cors::{self, AllowOrigin};
+// use webhook::client::WebhookClient;
+
+use axum::http::HeaderValue;
+use axum::Server;
+use axum::{http::Method, routing::get};
+use chrono::Utc;
+use std::net::SocketAddr;
+use tower_http::cors::CorsLayer;
 use tracing::info;
 use tracing_subscriber::FmtSubscriber;
-// use webhook::client::WebhookClient;
 
 // #[derive(Clone)]
 // struct AppState {
@@ -22,7 +23,7 @@ use tracing_subscriber::FmtSubscriber;
 
 pub async fn webserver(
     socket: SocketAddr,
-    allow_origin: AllowOrigin,
+    allow_origin: Vec<HeaderValue>,
     // webhook_url: String,
 ) -> Result<(), Box<dyn std::error::Error>> {
     // let state = AppState {
@@ -42,16 +43,14 @@ pub async fn webserver(
     //     })
     //     .build();
 
-    let cors = cors::CorsLayer::new()
-        // allow `GET` and `POST` when accessing the resource
-        .allow_methods(vec![Method::GET, Method::POST])
-        // allow requests from any origin
-        .allow_origin(allow_origin);
+    let cors = CorsLayer::new()
+        .allow_origin(allow_origin)
+        .allow_methods(vec![Method::GET, Method::POST]);
 
     let app = axum::Router::new()
         .route("/", get(|| async { "Hello, World!" }))
-        // .route("/contact", post(contact_submit))
         .route("/lag", get(lag))
+        // .route("/contact", post(contact_submit))
         // .with_state(state)
         // .layer(SocketIoLayer::new(ns))
         .layer(cors);

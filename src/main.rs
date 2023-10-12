@@ -1,7 +1,6 @@
 use axum::http::HeaderValue;
 use dotenv::dotenv;
 use std::{env, net::SocketAddr};
-use tower_http::cors;
 use webserver::webserver;
 
 mod webserver;
@@ -26,10 +25,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // let webhook_url: String = get_env_fail("WEBHOOK_URL");
 
-    webserver(
-        SocketAddr::new(host.parse()?, port),
-        cors::AllowOrigin::list(allowed_origin),
-    )
-    .await?;
+    webserver(SocketAddr::new(host.parse()?, port), allowed_origin).await?;
     Ok(())
 }
